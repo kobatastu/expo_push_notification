@@ -1,0 +1,15 @@
+@startuml
+control NativeApp #LightGreen
+control Expo #LightBlue
+control CloudRun #Orange
+database Firestore #Orange
+NativeApp -> Expo : getExpoPushTokenAsync()
+activate Expo
+NativeApp <- Expo : pushToken
+deactivate Expo
+NativeApp -> CloudRun : POST (pushToken)
+activate CloudRun
+CloudRun -> Firestore : POST (pushToken)
+NativeApp <- CloudRun : success
+deactivate CloudRun
+@enduml

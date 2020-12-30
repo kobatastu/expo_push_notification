@@ -1,0 +1,16 @@
+@startuml
+control CloudScheduler #Orange
+control CloudRun #Orange
+database Firestore #Orange
+control Expo #LightBlue
+control NativeApp #LightGreen
+CloudScheduler -> CloudRun : triger
+activate CloudRun
+CloudRun -> Firestore : GET
+activate Firestore
+CloudRun <- Firestore : pushToken
+deactivate Firestore
+CloudRun -> Expo : POST(pushToken,message)
+deactivate CloudRun
+Expo -> NativeApp : push通知
+@enduml
