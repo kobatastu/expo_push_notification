@@ -1,9 +1,9 @@
 import promiseRouter from 'express-promise-router';
 
-import { token } from '../api/external/token';
+import { pushToken } from '../api/external/pushToken';
 
 const router = promiseRouter();
 
-router.post('/api/external/token', token);
+router.post('/api/external/pushToken', pushToken);
 
 export const externalRouter = router;

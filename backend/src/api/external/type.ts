@@ -1,12 +1,12 @@
 type BodyType = {
-  token: string;
+  pushToken: string;
 };
 
 export const isRequestBody = (obj: unknown): obj is BodyType => {
   try {
     const t = obj as BodyType;
-    const { token } = t;
-    if (typeof token === 'string') {
+    const { pushToken } = t;
+    if (typeof pushToken === 'string') {
       return true;
     }
     return false;
