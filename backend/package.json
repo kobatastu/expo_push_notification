@@ -1,12 +1,20 @@
 {
   "name": "backend",
-  "version": "1.0.0",
   "description": "",
   "main": "src/app.ts",
   "scripts": {
+    "start": "node build/app.js",
     "start-dev": "ts-node src/app.ts",
     "activate": "gcloud config configurations activate expo-push-notification",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint",
+    "eslint": "eslint --ext .ts .",
+    "clean": "rm -rf ./build && mkdir ./build",
+    "compile": "tsc",
+    "build": "run-s clean compile set-revision",
+    "make-revision-file": "echo ${CIRCLE_SHA1:-$(git rev-parse head)} > ./build/revision.txt",
+    "set-app-version": "echo $(TZ=Asia/Tokyo date \"+%Y%m%d\")-$(cat build/revision.txt | cut -c 1-8) > build/app-version.txt",
+    "set-revision": "run-s make-revision-file set-app-version",
+    "build-image": "gcloud builds submit --project expo-push-notification"
   },
   "author": "",
   "license": "ISC",
