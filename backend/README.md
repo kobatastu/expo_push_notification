@@ -1,22 +1,39 @@
-## クイックスタート
+## セットアップ
 
-デバイスのpushTokeを通知に使うため、実機で行う
+### GCPのセットアップ
 
-1. pcにxcodeをインストール、携帯端末にexpoアプリをインストールする
-2. App.tsxのURLをバックエンドで設定したCloudRunのものに置き換える
-3. 以下のコマンドを実行
+google-cloud-sdkのインストール
 
 ```
-$ cd expo
-$ npm install
-$ npm run start
+$ curl https://sdk.cloud.google.com | bash
+$ exec -l $SHELL
 ```
 
-4. pcのウェブ画面にQRコードが表示されるので、iOSの場合カメラアプリを起動、Androidの場合はexpoアプリでQRコードを読み込む
-5. 起動したアプリで「Send PushToken to FireStore」を押すとpushTokenがFireStoreに保存される
+初期化
 
-## アプリ画面
+```
+$ gcloud init
+```
 
-うまくデバイスのpushTokeが取得できていれば画面に表示される（画像はシミュレーターのため表示されていない）
+アクセスの許可
 
-<img src="https://user-images.githubusercontent.com/46289011/103399095-c8b3f280-4b82-11eb-981a-7049d597d489.png" width=40% />
+```
+$ gcloud auth application-default login
+```
+
+## Cloud Build & Cloud Run へのデプロイ
+
+### Cloud Build
+
+```
+$ npm run build-image
+```
+
+### Cloud Run
+
+GCPのGUIから行う
+ここで取得したURLをexpo/App.tsxに反映する
+
+## schedulerへの設定
+
+通知の送信周期はcrontabで調整する
